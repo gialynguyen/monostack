@@ -1,2 +1,2 @@
-# monostack
+# Monostack
 Monorepo template
