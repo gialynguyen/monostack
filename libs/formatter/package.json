@@ -1,0 +1,15 @@
+{
+  "name": "monostack/formatter",
+  "version": "0.0.1",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "@rushstack/eslint-patch": "^1.1.4",
+    "deepmerge": "^4.2.2",
+    "eslint": "^8.21.0"
+  }
+}

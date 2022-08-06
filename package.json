@@ -1,0 +1,17 @@
+{
+  "name": "monostack",
+  "version": "0.0.1",
+  "license": "MIT",
+  "script": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "build:lib": "turbo run build --filter=./libs/*",
+    "lint": "turbo run lint",
+    "lint-staged": "turbo run lint-staged",
+    "prepare": "husky install",
+    "test": "turbo run test -- --passWithNoTests"
+  },
+  "devDependencies": {
+    "turbo": "^1.4.2"
+  }
+}
