@@ -1,0 +1,2 @@
+# monostack
+Monorepo template
