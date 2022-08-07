@@ -1,5 +1,5 @@
 const settings = {
-  plugins: ["node"],
+  plugins: ['node'],
   env: {
     node: true,
   },

@@ -1,4 +1,4 @@
-const merge = require("deepmerge");
+const merge = require('deepmerge');
 
 module.exports = {
   mergeConfig: merge,
