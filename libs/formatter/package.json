@@ -12,6 +12,7 @@
     "react.js",
     "jsx-a11y.js",
     "node.js",
+    "jest.js",
     "rules/*",
     "settings/*"
   ],
