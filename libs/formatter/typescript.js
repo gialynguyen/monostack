@@ -1,13 +1,13 @@
-require("@rushstack/eslint-patch/modern-module-resolution");
+require('@rushstack/eslint-patch/modern-module-resolution');
 
-const merge = require("deepmerge");
-const typescriptRules = require("./rules/typescript");
-const typescriptSettings = require("./settings/typescript");
+const merge = require('deepmerge');
+const typescriptRules = require('./rules/typescript');
+const typescriptSettings = require('./settings/typescript');
 
-const config = merge({ root: true }, ...typescriptSettings, {
+const config = merge(typescriptSettings, {
   overrides: [
     {
-      files: ["**/*.ts?(x)"],
+      files: ['**/*.ts?(x)'],
       rules: {
         ...typescriptRules,
       },

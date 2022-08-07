@@ -1,9 +1,18 @@
 {
-  "name": "monostack/formatter",
+  "name": "@monostack/formatter",
   "version": "0.0.1",
   "license": "MIT",
   "type": "commonjs",
   "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./typescript": "./typescript.js",
+    "./prettier": "./prettier.js",
+    "./react": "./react.js",
+    "./jsx-a11y": "./jsx-a11y.js",
+    "./node": "./node.js",
+    "./jest": "./jest.js"
+  },
   "files": [
     "index.js",
     "typescript.js",
@@ -43,5 +52,8 @@
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-recess-order": "^3.0.0",
     "stylelint-prettier": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

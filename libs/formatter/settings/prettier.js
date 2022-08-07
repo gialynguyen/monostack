@@ -1,6 +1,6 @@
 const settings = {
-  extends: ["prettier"],
-  plugins: ["prettier"],
+  extends: ['prettier'],
+  plugins: ['prettier'],
 };
 
 module.exports = settings;

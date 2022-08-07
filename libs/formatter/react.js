@@ -1,10 +1,10 @@
-require("@rushstack/eslint-patch/modern-module-resolution");
+require('@rushstack/eslint-patch/modern-module-resolution');
 
-const merge = require("deepmerge");
-const reactSettings = require("./settings/react");
-const reactRules = require("./rules/react");
+const merge = require('deepmerge');
+const reactSettings = require('./settings/react');
+const reactRules = require('./rules/react');
 
-const config = merge({ root: true }, ...reactSettings, {
+const config = merge(reactSettings, {
   rules: {
     ...reactRules,
   },

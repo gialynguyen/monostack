@@ -1,13 +1,13 @@
-require("@rushstack/eslint-patch/modern-module-resolution");
+require('@rushstack/eslint-patch/modern-module-resolution');
 
-const merge = require("deepmerge");
-const jestRules = require("./rules/jest");
-const jestSettings = require("./settings/jest");
+const merge = require('deepmerge');
+const jestRules = require('./rules/jest');
+const jestSettings = require('./settings/jest');
 
-const config = merge({ root: true }, ...jestSettings, {
+const config = merge(jestSettings, {
   overrides: [
     {
-      files: ["**/__tests__/**/*", "**/*.{spec,test}.*"],
+      files: ['**/__tests__/**/*', '**/*.{spec,test}.*'],
       rules: {
         ...jestRules,
       },
