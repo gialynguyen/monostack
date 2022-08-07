@@ -1,5 +1,5 @@
 const settings = {
-  extends: ['plugin:react-hooks/recommended'],
+  extends: ['plugin:react-hooks/recommended', 'plugin:react/jsx-runtime'],
   parserOptions: {
     babelOptions: {
       presets: ['@babel/preset-react'],
@@ -12,6 +12,11 @@ const settings = {
     },
   },
   plugins: ['react', 'react-hooks'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
 };
 
 module.exports = settings;

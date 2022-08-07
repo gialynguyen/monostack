@@ -15,6 +15,7 @@ importers:
       '@types/react-dom': ^18.0.6
       '@vitejs/plugin-react': ^2.0.0
       eslint: ^8.21.0
+      million: 1.12.3-beta.7
       prettier: ^2.7.1
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -22,6 +23,7 @@ importers:
       typescript: ^4.6.4
       vite: ^3.0.0
     dependencies:
+      million: 1.12.3-beta.7
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
@@ -2356,6 +2358,10 @@ packages:
     dependencies:
       braces: 3.0.2
       picomatch: 2.3.1
+
+  /million/1.12.3-beta.7:
+    resolution: {integrity: sha512-sWC6IXdf1Avmuhttq0od/vEuY3mIGMGVgQUtJDpusD9c/U0NGg0uzKFL4D3wR97+0NF/fiDNQzQ3nPvrwYudeg==}
+    dev: false
 
   /min-indent/1.0.1:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}

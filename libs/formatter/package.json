@@ -11,7 +11,8 @@
     "./react": "./react.js",
     "./jsx-a11y": "./jsx-a11y.js",
     "./node": "./node.js",
-    "./jest": "./jest.js"
+    "./jest": "./jest.js",
+    "./stylelint": "./stylelint.js"
   },
   "files": [
     "index.js",
@@ -22,6 +23,7 @@
     "jsx-a11y.js",
     "node.js",
     "jest.js",
+    "stylelint.js",
     "rules/*",
     "settings/*"
   ],
