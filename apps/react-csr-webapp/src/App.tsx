@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import reactLogo from './assets/react.svg';
 
-function App() {
+function App(): React.ReactElement {
   const [count, setCount] = useState(0);
 
   return (
