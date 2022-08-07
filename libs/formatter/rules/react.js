@@ -1,0 +1,28 @@
+const rules = {
+  "react/jsx-fragments": [1, "syntax"],
+  "react/prop-types": 1,
+  "react/display-name": 0,
+  "react/react-in-jsx-scope": 0,
+  "react/forbid-foreign-prop-types": [1, { allowInPropTypes: true }],
+  "react/iframe-missing-sandbox": 1,
+  "react/no-access-state-in-setstate": 1,
+  "react/no-render-return-value": 2,
+  "react/jsx-key": 1,
+  "react/jsx-no-comment-textnodes": 1,
+  "react/jsx-no-target-blank": 1,
+  "react/jsx-no-undef": 2,
+  "react/jsx-pascal-case": [1, { allowAllCaps: true, ignore: [] }],
+  "react/jsx-uses-vars": 1,
+  "react/jsx-uses-react": 1,
+  "react/no-danger-with-children": 1,
+  "react/no-direct-mutation-state": 1,
+  "react/no-find-dom-node": 1,
+  "react/no-is-mounted": 1,
+  "react/no-string-refs": 1,
+  "react/no-typos": 1,
+  "react/style-prop-object": 1,
+  "react-hooks/rules-of-hooks": 2,
+  "react-hooks/exhaustive-deps": 1,
+};
+
+module.exports = rules;
