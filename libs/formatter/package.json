@@ -12,7 +12,8 @@
     "./jsx-a11y": "./jsx-a11y.js",
     "./node": "./node.js",
     "./jest": "./jest.js",
-    "./stylelint": "./stylelint.js"
+    "./stylelint": "./stylelint.js",
+    "./testing-library": "./testing-library.js"
   },
   "files": [
     "index.js",
@@ -24,6 +25,7 @@
     "node.js",
     "jest.js",
     "stylelint.js",
+    "testing-library.js",
     "rules/*",
     "settings/*"
   ],
