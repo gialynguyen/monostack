@@ -7,16 +7,19 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest",
-    "test:ui": "vitest --ui"
+    "test": "pnpm build && vitest",
+    "test:ui": "vitest --ui",
+    "test:e2e": "pnpm build && npx playwright test"
   },
   "dependencies": {
+    "dotenv": "^16.0.1",
     "million": "1.12.3-beta.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@monostack/formatter": "workspace:^0.0.1",
+    "@playwright/test": "^1.25.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@types/react": "^18.0.15",
@@ -25,6 +28,7 @@
     "@vitest/ui": "^0.21.0",
     "eslint": "^8.21.0",
     "jsdom": "^20.0.0",
+    "playwright": "^1.25.0",
     "prettier": "^2.7.1",
     "stylelint": "^14.9.1",
     "typescript": "^4.6.4",

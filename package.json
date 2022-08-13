@@ -13,5 +13,8 @@
   },
   "devDependencies": {
     "turbo": "^1.4.2"
+  },
+  "engines": {
+    "node": ">= 16.0.0"
   }
 }

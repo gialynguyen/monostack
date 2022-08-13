@@ -10,6 +10,8 @@ const rules = {
   'no-redeclare': 0,
   '@typescript-eslint/no-redeclare': 1,
   'no-use-before-define': 0,
+  'no-duplicate-imports': 0,
+  'import/no-duplicates': 1,
   '@typescript-eslint/no-use-before-define': [
     1,
     {
