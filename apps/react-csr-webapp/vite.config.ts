@@ -23,7 +23,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test.setup.ts'],
     mockReset: true,
-    // include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     testTimeout: 60_000,
     hookTimeout: 60_000,
   },
