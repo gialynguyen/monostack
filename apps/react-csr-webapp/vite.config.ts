@@ -2,12 +2,13 @@
 /// <reference types="vite/client" />
 
 import reactPlugin from '@vitejs/plugin-react';
-import { defineConfig, UserConfigExport } from 'vite';
-import tsconfigPathsPlugin from 'vite-tsconfig-paths';
 /*
  * @description Virtual DOM optional
  * */
 // import { million } from 'million/vite-plugin-million';
+import type { UserConfigExport } from 'vite';
+import { defineConfig } from 'vite';
+import tsconfigPathsPlugin from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({

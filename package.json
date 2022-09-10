@@ -3,16 +3,17 @@
   "version": "0.0.1",
   "license": "MIT",
   "script": {
-    "build": "turbo run build",
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky install",
     "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
     "build:lib": "turbo run build --filter=./libs/*",
     "lint": "turbo run lint",
     "lint-staged": "turbo run lint-staged",
-    "prepare": "husky install",
     "test": "turbo run test -- --passWithNoTests"
   },
   "devDependencies": {
-    "turbo": "^1.4.2"
+    "turbo": "1.4.6"
   },
   "engines": {
     "node": ">= 16.0.0"

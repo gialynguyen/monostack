@@ -1,6 +1,6 @@
 {
   "name": "@monostack/formatter",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "license": "MIT",
   "type": "commonjs",
   "main": "index.js",
