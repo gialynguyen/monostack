@@ -25,5 +25,8 @@
     "deepmerge": "^4.2.2",
     "husky": "^8.0.1",
     "kolorist": "^1.5.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
