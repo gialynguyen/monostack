@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo/gitkit",
+  "name": "@monostack/gitkit",
   "version": "1.0.0",
   "description": "",
   "main": "./index.js",
