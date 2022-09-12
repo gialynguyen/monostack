@@ -1,0 +1,29 @@
+{
+  "name": "@monorepo/gitkit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./index.js",
+  "bin": {
+    "gitkit": "./index.js"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./commitlint.config": "./commitlint.config.js"
+  },
+  "files": [
+    "./index.js"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "chalk": "^5.0.1",
+    "commander": "^9.4.0",
+    "deepmerge": "^4.2.2",
+    "husky": "^8.0.1",
+    "kolorist": "^1.5.1"
+  }
+}

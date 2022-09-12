@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",
-    "@monostack/formatter": "workspace:^0.0.1",
+    "@monostack/formatter": "workspace:*",
     "@playwright/test": "^1.25.0",
     "@storybook/addon-actions": "^6.5.10",
     "@storybook/addon-essentials": "^6.5.10",

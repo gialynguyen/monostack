@@ -2,9 +2,9 @@
   "name": "monostack",
   "version": "0.0.1",
   "license": "MIT",
-  "script": {
+  "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky install",
+    "prepare": "npx gitkit setup",
     "dev": "turbo run dev --parallel",
     "build": "turbo run build",
     "build:lib": "turbo run build --filter=./libs/*",
@@ -13,9 +13,19 @@
     "test": "turbo run test -- --passWithNoTests"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "^17.1.0",
+    "@monorepo/gitkit": "workspace:*",
     "turbo": "1.4.6"
   },
   "engines": {
     "node": ">= 16.0.0"
+  },
+  "gitkit": {
+    "features": {
+      "commitlint": true
+    },
+    "hooks": {
+      "pre-commit": "pnpm lint"
+    }
   }
 }
