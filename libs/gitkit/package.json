@@ -1,6 +1,6 @@
 {
   "name": "@monostack/gitkit",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "./index.js",
   "bin": {
@@ -11,7 +11,8 @@
     "./commitlint.config": "./commitlint.config.js"
   },
   "files": [
-    "./index.js"
+    "./index.js",
+    "./commitlint.config.js"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
