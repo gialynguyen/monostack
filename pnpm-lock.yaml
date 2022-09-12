@@ -5,11 +5,11 @@ importers:
   .:
     specifiers:
       '@commitlint/config-conventional': ^17.1.0
-      '@monorepo/gitkit': workspace:*
+      '@monostack/gitkit': workspace:*
       turbo: 1.4.6
     devDependencies:
       '@commitlint/config-conventional': 17.1.0
-      '@monorepo/gitkit': link:libs/gitkit
+      '@monostack/gitkit': link:libs/gitkit
       turbo: 1.4.6
 
   apps/react-csr-webapp:
