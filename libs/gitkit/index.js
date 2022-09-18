@@ -199,6 +199,8 @@ const releasePackages = async userConfig => {
       await exec(`git add -A`);
       await exec(`git commit -m 'chore(release): ${tag} :tada:'`);
       await exec(`git tag ${tag}`);
+      await exec(`git push origin refs/tags/${tag}`);
+      await exec(`git push`);
     })
   );
 };
