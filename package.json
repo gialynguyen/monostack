@@ -10,7 +10,8 @@
     "build:lib": "turbo run build --filter=./libs/*",
     "lint": "turbo run lint",
     "lint-staged": "turbo run lint-staged",
-    "test": "turbo run test -- --passWithNoTests"
+    "test": "turbo run test -- --passWithNoTests",
+    "release": "npx gitkit release"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.1.0",
@@ -22,7 +23,13 @@
   },
   "gitkit": {
     "features": {
-      "commitlint": true
+      "commitlint": true,
+      "release": {
+        "packages": [
+          "apps/*",
+          "libs/*"
+        ]
+      }
     },
     "hooks": {
       "pre-commit": "pnpm lint"

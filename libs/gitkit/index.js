@@ -8,6 +8,10 @@ const path = require('path');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const os = require('os');
+const fg = require('fast-glob');
+const { execSync } = require('child_process');
+const prompts = require('prompts');
+const semver = require('semver');
 
 const program = new Command();
 const execPath = process.cwd();
@@ -19,8 +23,8 @@ const defaultConfig = {
   hooks: {},
 };
 
-const getConfigFromPackageJson = () => {
-  const packageJsonPath = path.join(execPath, 'package.json');
+const getConfigFromPackageJson = (cwd = execPath) => {
+  const packageJsonPath = path.join(cwd, 'package.json');
 
   if (!fs.existsSync(packageJsonPath)) {
     throw new Error('Package.json not found');
@@ -111,6 +115,94 @@ const setupCommitlintFeature = async () => {
   }
 };
 
+const releasePackages = async userConfig => {
+  const config = {
+    packages: './',
+  };
+
+  Object.assign(config, userConfig);
+
+  const packages = await fg(config.packages, {
+    onlyDirectories: true,
+    absolute: true,
+  });
+
+  const releasePackagesMetadata = [];
+
+  packages.forEach(package => {
+    const packageJsonPath = path.join(package, 'package.json');
+    const packageJson = require(packageJsonPath);
+
+    if (!packageJson) {
+      throw new Error(`[${package}]: package.json not found`);
+    }
+
+    const { name, version: currentVersion } = packageJson;
+
+    if (!name) {
+      throw new Error(`[${package}]: package's name missing`);
+    }
+
+    const hasCommit = execSync(`npx git-raw-commits --path ${package}`);
+
+    if (hasCommit) {
+      releasePackagesMetadata.push({
+        name,
+        currentVersion,
+        path: package,
+        packageJsonPath,
+      });
+    }
+  });
+
+  for (let index = 0; index < releasePackagesMetadata.length; index++) {
+    const packageMetadata = releasePackagesMetadata[index];
+    const { name, currentVersion } = packageMetadata;
+
+    console.log(`Release packages: ${name}`);
+
+    const response = await prompts([
+      {
+        type: 'text',
+        name: 'version',
+        message: `Release version(current: ${currentVersion}): `,
+        validate: version => {
+          return !!semver.valid(version);
+        },
+      },
+    ]);
+
+    Object.assign(packageMetadata, {
+      releaseVersion: response.version,
+    });
+  }
+
+  const changelogCmd = `conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .`;
+
+  await Promise.all(
+    releasePackagesMetadata.map(async packageMetadata => {
+      const { releaseVersion, path, packageJsonPath, name } = packageMetadata;
+
+      if (!releaseVersion) return;
+
+      const packageJson = require(packageJsonPath);
+      packageJson.version = releaseVersion;
+
+      fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+
+      await exec(`npx ${changelogCmd}`, {
+        cwd: path,
+      });
+
+      const tag = `${name}@${releaseVersion}`;
+
+      await exec(`git add -A`);
+      await exec(`git commit -m 'chore(release): ${tag} :tada:'`);
+      await exec(`git tag ${tag}`);
+    })
+  );
+};
+
 program
   .name('gitkit')
   .description('CLI to git-hook utility collection')
@@ -140,6 +232,22 @@ program
         'commit-msg': 'npx --no -- commitlint --edit ${1}',
       });
     }
+  });
+
+program
+  .command('release')
+  .description('Generate changelog and release packages')
+  .action(async () => {
+    const userConfig = getConfigFromPackageJson();
+    if (!userConfig) {
+      console.warn(
+        kolorist.yellow('Gitkit config not found, no feature will be installed')
+      );
+
+      return;
+    }
+
+    await releasePackages(userConfig.features.release);
   });
 
 program.parse();
