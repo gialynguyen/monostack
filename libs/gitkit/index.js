@@ -137,7 +137,10 @@ const releasePackages = async userConfig => {
       throw new Error(`[${package}]: package.json not found`);
     }
 
-    const { name, version: currentVersion } = packageJson;
+    let { name, version: currentVersion } = packageJson;
+    if (name.startsWith('@')) {
+      name = name.split('/')[1];
+    }
 
     if (!name) {
       throw new Error(`[${package}]: package's name missing`);
@@ -177,11 +180,10 @@ const releasePackages = async userConfig => {
     });
   }
 
-  const changelogCmd = `conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .`;
-
   await Promise.all(
     releasePackagesMetadata.map(async packageMetadata => {
       const { releaseVersion, path, packageJsonPath, name } = packageMetadata;
+      const changelogCmd = `conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . --lerna-package ${name} `;
 
       if (!releaseVersion) return;
 
