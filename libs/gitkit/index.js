@@ -225,7 +225,7 @@ const releasePackages = async userConfig => {
   await Promise.all(
     releasePackagesMetadata.map(async packageMetadata => {
       const { releaseVersion, path, packageJsonPath, name } = packageMetadata;
-      const changelogCmd = `conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . --lerna-package ${name} `;
+      const changelogCmd = `conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . --lerna-package ${name}`;
 
       if (!releaseVersion) return;
 
@@ -234,17 +234,17 @@ const releasePackages = async userConfig => {
 
       fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
-      await exec(`npx ${changelogCmd} --from `, {
+      await exec(`npx ${changelogCmd}`, {
         cwd: path,
       });
 
       const tag = `${name}@${releaseVersion}`;
 
-      await exec(`git add -A`);
-      await exec(`git commit -m 'chore(release): ${tag} :tada:'`);
-      await exec(`git tag ${tag}`);
-      await exec(`git push origin refs/tags/${tag}`);
-      await exec(`git push`);
+      // await exec(`git add -A`);
+      // await exec(`git commit -m 'chore(release): ${tag} :tada:'`);
+      // await exec(`git tag ${tag}`);
+      // await exec(`git push origin refs/tags/${tag}`);
+      // await exec(`git push`);
     })
   );
 };
