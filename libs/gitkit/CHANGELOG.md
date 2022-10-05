@@ -1,3 +1,12 @@
+## [1.0.10](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.9...gitkit@1.0.10) (2022-10-05)
+
+
+### Bug Fixes
+
+* **gitkit:** only modify CHANGELOG if has commits before ([caeb62e](https://github.com/gialynguyen/monostack/commit/caeb62e7a40f685aba20fa1ace956d4a117111ca))
+
+
+
 ## 1.0.9 (2022-10-05)
 
 ### Bug Fixes
