@@ -129,26 +129,23 @@ const getLastTag = async packageName => {
     .reverse()[0];
 };
 
-const hasCommitFromTag = (path, tag) => {
-  console.log('RUN');
+const commitFromTag = (path, tag) => {
   return new Promise(resolve => {
     try {
       let commits = [];
-      console.log(path, tag);
       gitRawCommits({
         from: tag,
         path,
       })
         .on('data', data => {
-          console.log('data: ', data.toString());
+          const commit = data.toString().split(os.EOL).filter(Boolean)?.[0];
+          commits.push(commit);
         })
         .on('end', () => {
-          console.log('end');
-          resolve(true);
+          resolve(commits);
         });
     } catch (e) {
-      console.log('e: ', e);
-      resolve(false);
+      resolve(undefined);
     }
   });
 };
@@ -189,17 +186,17 @@ const releasePackages = async userConfig => {
       const lastTag = await getLastTag(name);
       let hasCommit = false;
       if (lastTag) {
-        hasCommit = await hasCommitFromTag(package, lastTag);
+        hasCommit = !!(await commitFromTag(package, lastTag));
       }
 
-      // if (hasCommit) {
-      //   releasePackagesMetadata.push({
-      //     name,
-      //     currentVersion,
-      //     path: package,
-      //     packageJsonPath,
-      //   });
-      // }
+      if (!lastTag || hasCommit) {
+        releasePackagesMetadata.push({
+          name,
+          currentVersion,
+          path: package,
+          packageJsonPath,
+        });
+      }
     })
   );
 
