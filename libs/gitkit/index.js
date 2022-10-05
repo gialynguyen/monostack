@@ -9,7 +9,6 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const os = require('os');
 const fg = require('fast-glob');
-const { execSync } = require('child_process');
 const prompts = require('prompts');
 const semver = require('semver');
 const gitRawCommits = require('git-raw-commits');
@@ -129,7 +128,7 @@ const getLastTag = async packageName => {
     .reverse()[0];
 };
 
-const commitFromTag = (path, tag) => {
+const commitsFromTag = (path, tag) => {
   return new Promise(resolve => {
     try {
       let commits = [];
@@ -186,7 +185,7 @@ const releasePackages = async userConfig => {
       const lastTag = await getLastTag(name);
       let hasCommit = false;
       if (lastTag) {
-        hasCommit = !!(await commitFromTag(package, lastTag));
+        hasCommit = !!(await commitsFromTag(package, lastTag));
       }
 
       if (!lastTag || hasCommit) {
@@ -200,53 +199,54 @@ const releasePackages = async userConfig => {
     })
   );
 
-  for (let index = 0; index < releasePackagesMetadata.length; index++) {
-    const packageMetadata = releasePackagesMetadata[index];
-    const { name, currentVersion } = packageMetadata;
-
-    console.log(`Release packages: ${name}`);
-
-    const response = await prompts([
-      {
-        type: 'text',
-        name: 'version',
-        message: `Release version(current: ${currentVersion}): `,
-        validate: version => {
-          return !!semver.valid(version);
-        },
+  const { selectedPackage } = await prompts([
+    {
+      type: 'select',
+      name: 'selectedPackage',
+      choices: releasePackagesMetadata.map(data => ({
+        title: data.name,
+        value: data,
+      })),
+      message: `Choose package:`,
+    },
+    {
+      type: 'text',
+      name: 'version',
+      message: (_, { selectedPackage }) =>
+        `Release version(current: ${selectedPackage.currentVersion}): `,
+      validate: version => {
+        return !!semver.valid(version);
       },
-    ]);
+    },
+  ]);
 
-    Object.assign(packageMetadata, {
-      releaseVersion: response.version,
-    });
-  }
+  const {
+    releaseVersion,
+    path: packagePath,
+    packageJsonPath,
+    name,
+  } = selectedPackage;
 
-  await Promise.all(
-    releasePackagesMetadata.map(async packageMetadata => {
-      const { releaseVersion, path, packageJsonPath, name } = packageMetadata;
-      const changelogCmd = `conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . --lerna-package ${name}`;
+  const changelogCmd = `conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . --lerna-package ${name}`;
 
-      if (!releaseVersion) return;
+  if (!releaseVersion) return;
 
-      const packageJson = require(packageJsonPath);
-      packageJson.version = releaseVersion;
+  const packageJson = require(packageJsonPath);
+  packageJson.version = releaseVersion;
 
-      fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
-      await exec(`npx ${changelogCmd}`, {
-        cwd: path,
-      });
+  await exec(`npx ${changelogCmd}`, {
+    cwd: packagePath,
+  });
 
-      const tag = `${name}@${releaseVersion}`;
+  const tag = `${name}@${releaseVersion}`;
 
-      await exec(`git add -A`);
-      await exec(`git commit -m 'chore(release): ${tag} :tada:'`);
-      await exec(`git tag ${tag}`);
-      await exec(`git push origin refs/tags/${tag}`);
-      await exec(`git push`);
-    })
-  );
+  await exec(`git add -A`);
+  await exec(`git commit -m 'chore(release): ${tag} :tada:'`);
+  await exec(`git tag ${tag}`);
+  await exec(`git push origin refs/tags/${tag}`);
+  await exec(`git push`);
 };
 
 program
