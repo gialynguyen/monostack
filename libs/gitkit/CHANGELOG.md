@@ -1,3 +1,18 @@
+## 1.0.9 (2022-10-05)
+
+
+### Bug Fixes
+
+* **gitkit:** detect has commit from last tag ([4182b40](https://github.com/gialynguyen/monostack/commit/4182b40c279b395b5e67615efb69c4d21a82d9aa))
+
+
+### Features
+
+* **gitkit:** githook & commitlint features ([8b4c5be](https://github.com/gialynguyen/monostack/commit/8b4c5be0764c2d822613ebaf33a3f05d26cb6aa0))
+* release package version ([9c77b3b](https://github.com/gialynguyen/monostack/commit/9c77b3be05aa1d9c865f274790e335c012f241b1))
+
+
+
 ## 1.0.8 (2022-10-05)
 
 ### Features
