@@ -12,6 +12,7 @@ const fg = require('fast-glob');
 const { execSync } = require('child_process');
 const prompts = require('prompts');
 const semver = require('semver');
+const gitRawCommits = require('git-raw-commits');
 
 const program = new Command();
 const execPath = process.cwd();
@@ -115,6 +116,43 @@ const setupCommitlintFeature = async () => {
   }
 };
 
+const getLastTag = async packageName => {
+  const tags = await exec(`git tag`).then(r =>
+    r.stdout.split(os.EOL).filter(Boolean)
+  );
+
+  const prefix = `${packageName}@`;
+
+  return tags
+    .filter(tag => tag.startsWith(prefix))
+    .sort()
+    .reverse()[0];
+};
+
+const hasCommitFromTag = (path, tag) => {
+  console.log('RUN');
+  return new Promise(resolve => {
+    try {
+      let commits = [];
+      console.log(path, tag);
+      gitRawCommits({
+        from: tag,
+        path,
+      })
+        .on('data', data => {
+          console.log('data: ', data.toString());
+        })
+        .on('end', () => {
+          console.log('end');
+          resolve(true);
+        });
+    } catch (e) {
+      console.log('e: ', e);
+      resolve(false);
+    }
+  });
+};
+
 const releasePackages = async userConfig => {
   const config = {
     packages: './',
@@ -129,34 +167,41 @@ const releasePackages = async userConfig => {
 
   const releasePackagesMetadata = [];
 
-  packages.forEach(package => {
-    const packageJsonPath = path.join(package, 'package.json');
-    const packageJson = require(packageJsonPath);
+  await Promise.all(
+    packages.map(async package => {
+      const packageJsonPath = path.join(package, 'package.json');
+      const packageJson = require(packageJsonPath);
 
-    if (!packageJson) {
-      throw new Error(`[${package}]: package.json not found`);
-    }
+      if (!packageJson) {
+        throw new Error(`[${package}]: package.json not found`);
+      }
 
-    let { name, version: currentVersion } = packageJson;
-    if (name.startsWith('@')) {
-      name = name.split('/')[1];
-    }
+      let { name, version: currentVersion } = packageJson;
+      if (name.startsWith('@')) {
+        name = name.split('/')[1];
+      }
 
-    if (!name) {
-      throw new Error(`[${package}]: package's name missing`);
-    }
+      if (!name) {
+        throw new Error(`[${package}]: package's name missing`);
+      }
 
-    const hasCommit = execSync(`npx git-raw-commits --path ${package}`);
+      // const hasCommit = execSync(`npx git-raw-commits --path ${package}`);
+      const lastTag = await getLastTag(name);
+      let hasCommit = false;
+      if (lastTag) {
+        hasCommit = await hasCommitFromTag(package, lastTag);
+      }
 
-    if (hasCommit) {
-      releasePackagesMetadata.push({
-        name,
-        currentVersion,
-        path: package,
-        packageJsonPath,
-      });
-    }
-  });
+      // if (hasCommit) {
+      //   releasePackagesMetadata.push({
+      //     name,
+      //     currentVersion,
+      //     path: package,
+      //     packageJsonPath,
+      //   });
+      // }
+    })
+  );
 
   for (let index = 0; index < releasePackagesMetadata.length; index++) {
     const packageMetadata = releasePackagesMetadata[index];
@@ -192,7 +237,7 @@ const releasePackages = async userConfig => {
 
       fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
-      await exec(`npx ${changelogCmd}`, {
+      await exec(`npx ${changelogCmd} --from `, {
         cwd: path,
       });
 
