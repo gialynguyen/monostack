@@ -1,3 +1,17 @@
+## [1.0.11](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.9...gitkit@1.0.11) (2022-10-06)
+
+
+### Bug Fixes
+
+* **gitkit:** only modify CHANGELOG if has commits before ([caeb62e](https://github.com/gialynguyen/monostack/commit/caeb62e7a40f685aba20fa1ace956d4a117111ca))
+
+
+### Features
+
+* allow select release packages ([f91dd93](https://github.com/gialynguyen/monostack/commit/f91dd93437aa4cdcccb58de542187695d86905ef))
+
+
+
 ## [1.0.10](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.9...gitkit@1.0.10) (2022-10-05)
 
 
