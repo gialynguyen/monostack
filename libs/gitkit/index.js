@@ -181,7 +181,6 @@ const releasePackages = async userConfig => {
         throw new Error(`[${package}]: package's name missing`);
       }
 
-      // const hasCommit = execSync(`npx git-raw-commits --path ${package}`);
       const lastTag = await getLastTag(name);
       let hasCommit = false;
       if (lastTag) {
