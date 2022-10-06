@@ -1,3 +1,7 @@
+## [1.0.12](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.11...gitkit@1.0.12) (2022-10-06)
+
+
+
 ## [1.0.11](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.9...gitkit@1.0.11) (2022-10-06)
 
 ### Features
