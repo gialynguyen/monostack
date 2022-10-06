@@ -199,7 +199,7 @@ const releasePackages = async userConfig => {
     })
   );
 
-  const { selectedPackage } = await prompts([
+  const { selectedPackage, version } = await prompts([
     {
       type: 'select',
       name: 'selectedPackage',
@@ -220,19 +220,14 @@ const releasePackages = async userConfig => {
     },
   ]);
 
-  const {
-    releaseVersion,
-    path: packagePath,
-    packageJsonPath,
-    name,
-  } = selectedPackage;
+  const { path: packagePath, packageJsonPath, name } = selectedPackage;
 
   const changelogCmd = `conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . --lerna-package ${name}`;
 
-  if (!releaseVersion) return;
+  if (!version) return;
 
   const packageJson = require(packageJsonPath);
-  packageJson.version = releaseVersion;
+  packageJson.version = version;
 
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
@@ -240,7 +235,7 @@ const releasePackages = async userConfig => {
     cwd: packagePath,
   });
 
-  const tag = `${name}@${releaseVersion}`;
+  const tag = `${name}@${version}`;
 
   await exec(`git add -A`);
   await exec(`git commit -m 'chore(release): ${tag} :tada:'`);
