@@ -12,6 +12,7 @@ const fg = require('fast-glob');
 const prompts = require('prompts');
 const semver = require('semver');
 const gitRawCommits = require('git-raw-commits');
+const { blue } = require('kolorist');
 
 const program = new Command();
 const execPath = process.cwd();
@@ -153,7 +154,7 @@ const hasCommitFromTag = (path, tag) => {
 };
 
 const releasePackages = async userConfig => {
-  const config = {
+  const defaultConfig = {
     packages: './',
     'git-tag': {
       'auto-add': true,
@@ -166,7 +167,7 @@ const releasePackages = async userConfig => {
     },
   };
 
-  deepmerge(config, userConfig);
+  const config = deepmerge(defaultConfig, userConfig);
 
   const packages = await fg(config.packages, {
     onlyDirectories: true,
@@ -230,6 +231,11 @@ const releasePackages = async userConfig => {
       },
     },
   ]);
+
+  if (!selectedPackage) {
+    console.log(blue('No package was selected'));
+    return;
+  }
 
   const { path: packagePath, packageJsonPath, name } = selectedPackage;
 
