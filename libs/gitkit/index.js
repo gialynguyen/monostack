@@ -155,9 +155,18 @@ const hasCommitFromTag = (path, tag) => {
 const releasePackages = async userConfig => {
   const config = {
     packages: './',
+    'git-tag': {
+      'auto-add': true,
+      'commit-message': 'chore(release): {{tag}} :tada:',
+      'auto-push': true,
+    },
+    changelog: {
+      enable: true,
+      preset: 'conventionalcommits',
+    },
   };
 
-  Object.assign(config, userConfig);
+  deepmerge(config, userConfig);
 
   const packages = await fg(config.packages, {
     onlyDirectories: true,
@@ -224,8 +233,6 @@ const releasePackages = async userConfig => {
 
   const { path: packagePath, packageJsonPath, name } = selectedPackage;
 
-  const changelogCmd = `conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . --lerna-package ${name}`;
-
   if (!version) return;
 
   const packageJson = require(packageJsonPath);
@@ -233,17 +240,34 @@ const releasePackages = async userConfig => {
 
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
-  await exec(`npx ${changelogCmd}`, {
-    cwd: packagePath,
-  });
+  const changelogConfig = config.changelog;
+
+  if (changelogConfig.enable) {
+    const changelogCmd = `conventional-changelog -p ${changelogConfig.preset} -i CHANGELOG.md -s --commit-path . --lerna-package ${name}`;
+
+    await exec(`npx ${changelogCmd}`, {
+      cwd: packagePath,
+    });
+  }
 
   const tag = `${name}@${version}`;
 
-  await exec(`git add -A`);
-  await exec(`git commit -m 'chore(release): ${tag} :tada:'`);
-  await exec(`git tag ${tag}`);
-  await exec(`git push origin refs/tags/${tag}`);
-  await exec(`git push`);
+  const gitTagConfig = config['git-tag'];
+
+  if (gitTagConfig['auto-add']) {
+    await exec(`git add -A`);
+    const releaseTagMessage = gitTagConfig['commit-message'].replace(
+      /{{\s+?tag\s+?}}/,
+      tag
+    );
+    await exec(`git commit -m '${releaseTagMessage}'`);
+    await exec(`git tag ${tag}`);
+
+    if (gitTagConfig['auto-push']) {
+      await exec(`git push origin refs/tags/${tag}`);
+      await exec(`git push`);
+    }
+  }
 };
 
 program

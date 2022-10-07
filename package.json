@@ -28,7 +28,16 @@
         "packages": [
           "apps/*",
           "libs/*"
-        ]
+        ],
+        "git-tag": {
+          "auto-add": true,
+          "auto-push": true,
+          "commit-message": "chore(release): {{tag}} :tada:"
+        },
+        "changelog": {
+          "enable": true,
+          "preset": "conventionalcommits"
+        }
       }
     },
     "hooks": {
