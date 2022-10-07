@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.1.0...gitkit@1.2.0) (2022-10-07)
+
+
+### Bug Fixes
+
+* **release-tool:** the regex use to generate message incorrect ([c168403](https://github.com/gialynguyen/monostack/commit/c168403cf86df17704a7c2ac74ed1cb78425fd49))
+
 ## [1.1.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.13...gitkit@1.1.0) (2022-10-07)
 
 
