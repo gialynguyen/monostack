@@ -128,20 +128,23 @@ const getLastTag = async packageName => {
     .reverse()[0];
 };
 
-const commitsFromTag = (path, tag) => {
+const hasCommitFromTag = (path, tag) => {
   return new Promise(resolve => {
     try {
-      let commits = [];
-      gitRawCommits({
+      let hasCommit = false;
+      const stream = gitRawCommits({
         from: tag,
         path,
       })
         .on('data', data => {
           const commit = data.toString().split(os.EOL).filter(Boolean)?.[0];
-          commits.push(commit);
+          if (commit) {
+            hasCommit = true;
+            stream.destroy();
+          }
         })
-        .on('end', () => {
-          resolve(commits);
+        .on('close', () => {
+          resolve(hasCommit);
         });
     } catch (e) {
       resolve(undefined);
@@ -184,7 +187,7 @@ const releasePackages = async userConfig => {
       const lastTag = await getLastTag(name);
       let hasCommit = false;
       if (lastTag) {
-        hasCommit = !!(await commitsFromTag(package, lastTag));
+        hasCommit = !!(await hasCommitFromTag(package, lastTag));
       }
 
       if (!lastTag || hasCommit) {
