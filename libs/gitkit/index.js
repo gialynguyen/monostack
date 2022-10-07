@@ -263,7 +263,7 @@ const releasePackages = async userConfig => {
   if (gitTagConfig['auto-add']) {
     await exec(`git add -A`);
     const releaseTagMessage = gitTagConfig['commit-message'].replace(
-      /{{\s+?tag\s+?}}/,
+      /{{\s*?tag\s*?}}/,
       tag
     );
     await exec(`git commit -m '${releaseTagMessage}'`);
