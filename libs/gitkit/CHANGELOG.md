@@ -1,3 +1,12 @@
+## [1.0.14](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.13...gitkit@1.0.14) (2022-10-07)
+
+
+### Performance Improvements
+
+* stop trace commit history when detecting has a commit ([995c2f9](https://github.com/gialynguyen/monostack/commit/995c2f9f392e0f3eaab84d5e3105787beafbcf28))
+
+
+
 ## [1.0.13](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.12...gitkit@1.0.13) (2022-10-06)
 
 
