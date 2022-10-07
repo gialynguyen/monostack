@@ -1,3 +1,15 @@
+## [1.1.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.13...gitkit@1.1.0) (2022-10-07)
+
+
+### Features
+
+* **release-tool:** add changelog, git-tag customized capabilities ([91779a6](https://github.com/gialynguyen/monostack/commit/91779a6519ae2e67728fe951829d0f9be2c71379))
+
+
+### Performance Improvements
+
+* stop trace commit history when detecting has a commit ([995c2f9](https://github.com/gialynguyen/monostack/commit/995c2f9f392e0f3eaab84d5e3105787beafbcf28))
+
 ## [1.0.14](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.13...gitkit@1.0.14) (2022-10-07)
 
 
