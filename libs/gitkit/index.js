@@ -169,6 +169,9 @@ const releasePackages = async userConfig => {
       'commit-message': 'chore(release): {{tag}} :tada:',
       'auto-push': true,
     },
+    npm: {
+      'auto-publish': false,
+    },
     changelog: {
       enable: true,
       preset: 'conventionalcommits',
@@ -314,7 +317,7 @@ const releasePackages = async userConfig => {
     }
   }
 
-  const { path: packagePath, packageJsonPath, name } = selectedPackage;
+  const { path: packageCwd, packageJsonPath, name } = selectedPackage;
 
   if (!version) return;
 
@@ -379,14 +382,15 @@ const releasePackages = async userConfig => {
     const changelogCmd = `conventional-changelog -p ${changelogConfig.preset} -i CHANGELOG.md -s --commit-path . --lerna-package ${name}`;
 
     await exec(`npx ${changelogCmd}`, {
-      cwd: packagePath,
+      cwd: packageCwd,
     });
   }
 
-  if (gitTagConfig['auto-add']) {
-    await exec(`git add -A`).then(execCallbackWriteStream);
+  await exec(`git add -A`).then(execCallbackWriteStream);
 
-    await exec(`git commit -m '${releaseMessage}'`);
+  await exec(`git commit -m '${releaseMessage}'`);
+
+  if (gitTagConfig['auto-add']) {
     await exec(`git tag ${tag}`);
 
     if (gitTagConfig['auto-push']) {
@@ -395,6 +399,14 @@ const releasePackages = async userConfig => {
       );
       await exec(`git push`).then(execCallbackWriteStream);
     }
+  }
+
+  const npmConfig = config.npm;
+
+  if (npmConfig['auto-publish']) {
+    await exec(`npm publish`, { cwd: packageCwd }).then(
+      execCallbackWriteStream
+    );
   }
 };
 
