@@ -1,3 +1,10 @@
+### [1.4.1](https://github.com/gialynguyen/monostack/compare/gitkit@1.4.0...gitkit@1.4.1) (2022-10-09)
+
+
+### Bug Fixes
+
+* add logger to list publish files ([1a70446](https://github.com/gialynguyen/monostack/commit/1a704465a21bd0af05216c902ccc68e7c32b53ab))
+
 ## [1.4.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.2.0...gitkit@1.4.0) (2022-10-09)
 
 ### Features
