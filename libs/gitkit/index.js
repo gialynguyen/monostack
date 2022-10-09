@@ -386,7 +386,7 @@ const releasePackages = async userConfig => {
   if (gitTagConfig['auto-add']) {
     await exec(`git add -A`).then(execCallbackWriteStream);
 
-    await exec(`git commit -m '${releaseTagMessage}'`);
+    await exec(`git commit -m '${releaseMessage}'`);
     await exec(`git tag ${tag}`);
 
     if (gitTagConfig['auto-push']) {
