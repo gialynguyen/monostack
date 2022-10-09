@@ -2,7 +2,6 @@
 
 const { Command } = require('commander');
 const deepmerge = require('deepmerge');
-const kolorist = require('kolorist');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
@@ -12,7 +11,7 @@ const fg = require('fast-glob');
 const prompts = require('prompts');
 const semver = require('semver');
 const gitRawCommits = require('git-raw-commits');
-const { blue } = require('kolorist');
+const logger = require('./logger');
 
 const program = new Command();
 const execPath = process.cwd();
@@ -110,9 +109,7 @@ const setupCommitlintFeature = async () => {
       defaultConfigFile
     );
     const listPkg = defaultPlugins.join(', ');
-    console.log(
-      kolorist.bold(kolorist.cyan(`Please install packages: ${listPkg}`))
-    );
+    logger.heading(`Please install packages: ${listPkg}`);
   }
 };
 
@@ -233,7 +230,7 @@ const releasePackages = async userConfig => {
   ]);
 
   if (!selectedPackage) {
-    console.log(blue('No package was selected'));
+    logger.info('No package was selected');
     return;
   }
 
@@ -289,9 +286,7 @@ program
 
     const userConfig = getConfigFromPackageJson();
     if (!userConfig) {
-      console.warn(
-        kolorist.yellow('Gitkit config not found, no feature will be installed')
-      );
+      logger.warn('Gitkit config not found, no feature will be installed');
 
       return;
     }
@@ -313,9 +308,7 @@ program
   .action(async () => {
     const userConfig = getConfigFromPackageJson();
     if (!userConfig) {
-      console.warn(
-        kolorist.yellow('Gitkit config not found, no feature will be installed')
-      );
+      logger.warn('Gitkit config not found, no feature will be installed');
 
       return;
     }
