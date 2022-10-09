@@ -1,71 +1,49 @@
 ## [1.4.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.2.0...gitkit@1.4.0) (2022-10-09)
 
-
-### ⚠ BREAKING CHANGES
-
-* create logger module
-
 ### Features
 
-* support custom commit message and preview before release ([24ad209](https://github.com/gialynguyen/monostack/commit/24ad2097da4d2bab5fadc07a403dec6ae9bf0b1d))
-* support show list options valid next version ([cd186a1](https://github.com/gialynguyen/monostack/commit/cd186a1ceb22e2489fdbc223da28491f59970b4e))
-
-
-### Code Refactoring
-
-* create logger module ([d09675e](https://github.com/gialynguyen/monostack/commit/d09675ea50eb35d8563f11c3f7218e14f941e269))
+- support custom commit message and preview before release ([24ad209](https://github.com/gialynguyen/monostack/commit/24ad2097da4d2bab5fadc07a403dec6ae9bf0b1d))
+- support show list options valid next version ([cd186a1](https://github.com/gialynguyen/monostack/commit/cd186a1ceb22e2489fdbc223da28491f59970b4e))
 
 ## [1.3.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.2.0...gitkit@1.3.0) (2022-10-09)
 
-
 ### ⚠ BREAKING CHANGES
 
-* create logger module
+- create logger module
 
 ### Features
 
-* support show list options valid next version ([cd186a1](https://github.com/gialynguyen/monostack/commit/cd186a1ceb22e2489fdbc223da28491f59970b4e))
-
+- support show list options valid next version ([cd186a1](https://github.com/gialynguyen/monostack/commit/cd186a1ceb22e2489fdbc223da28491f59970b4e))
 
 ### Code Refactoring
 
-* create logger module ([d09675e](https://github.com/gialynguyen/monostack/commit/d09675ea50eb35d8563f11c3f7218e14f941e269))
+- create logger module ([d09675e](https://github.com/gialynguyen/monostack/commit/d09675ea50eb35d8563f11c3f7218e14f941e269))
 
 ## [1.2.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.1.0...gitkit@1.2.0) (2022-10-07)
 
-
 ### Bug Fixes
 
-* **release-tool:** the regex use to generate message incorrect ([c168403](https://github.com/gialynguyen/monostack/commit/c168403cf86df17704a7c2ac74ed1cb78425fd49))
+- **release-tool:** the regex use to generate message incorrect ([c168403](https://github.com/gialynguyen/monostack/commit/c168403cf86df17704a7c2ac74ed1cb78425fd49))
 
 ## [1.1.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.13...gitkit@1.1.0) (2022-10-07)
 
-
 ### Features
 
-* **release-tool:** add changelog, git-tag customized capabilities ([91779a6](https://github.com/gialynguyen/monostack/commit/91779a6519ae2e67728fe951829d0f9be2c71379))
-
+- **release-tool:** add changelog, git-tag customized capabilities ([91779a6](https://github.com/gialynguyen/monostack/commit/91779a6519ae2e67728fe951829d0f9be2c71379))
 
 ### Performance Improvements
 
-* stop trace commit history when detecting has a commit ([995c2f9](https://github.com/gialynguyen/monostack/commit/995c2f9f392e0f3eaab84d5e3105787beafbcf28))
+- stop trace commit history when detecting has a commit ([995c2f9](https://github.com/gialynguyen/monostack/commit/995c2f9f392e0f3eaab84d5e3105787beafbcf28))
 
 ## [1.0.14](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.13...gitkit@1.0.14) (2022-10-07)
 
-
 ### Performance Improvements
 
-* stop trace commit history when detecting has a commit ([995c2f9](https://github.com/gialynguyen/monostack/commit/995c2f9f392e0f3eaab84d5e3105787beafbcf28))
-
-
+- stop trace commit history when detecting has a commit ([995c2f9](https://github.com/gialynguyen/monostack/commit/995c2f9f392e0f3eaab84d5e3105787beafbcf28))
 
 ## [1.0.13](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.12...gitkit@1.0.13) (2022-10-06)
 
-
-
 ## [1.0.12](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.11...gitkit@1.0.12) (2022-10-06)
-
-
 
 ## [1.0.11](https://github.com/gialynguyen/monostack/compare/gitkit@1.0.9...gitkit@1.0.11) (2022-10-06)
 
