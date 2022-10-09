@@ -13,6 +13,7 @@ const semver = require('semver');
 const gitRawCommits = require('git-raw-commits');
 const logger = require('./logger');
 
+const version = '1.2.0';
 const program = new Command();
 const execPath = process.cwd();
 const readFile = util.promisify(fs.readFile);
@@ -208,7 +209,57 @@ const releasePackages = async userConfig => {
     })
   );
 
-  const { selectedPackage, version } = await prompts([
+  const getValidNextVersions = currentVersion => {
+    const currentIsAlpha = currentVersion.includes('alpha');
+    const currentIsBeta = currentVersion.includes('beta');
+    const currentIsStable = !currentIsBeta && !currentIsAlpha;
+
+    const inc = (releaseType, identifier) => {
+      return semver.inc(currentVersion, releaseType, identifier);
+    };
+
+    const createVersionOption = (label, version) => {
+      return {
+        title: `${label} (${version})`,
+        value: version,
+      };
+    };
+
+    const validVersions = [
+      createVersionOption(
+        'next',
+        inc(currentIsStable ? 'patch' : 'prerelease')
+      ),
+    ];
+
+    if (currentIsStable) {
+      validVersions.push(
+        createVersionOption('alpha-minor', inc('preminor', 'alpha')),
+        createVersionOption('beta-minor', inc('preminor', 'beta')),
+        createVersionOption('alpha-major', inc('premajor', 'alpha')),
+        createVersionOption('beta-major', inc('premajor', 'beta')),
+        createVersionOption('minor', inc('minor')),
+        createVersionOption('major', inc('major'))
+      );
+    }
+
+    if (currentIsAlpha) {
+      validVersions.push(createVersionOption('beta', `${inc('patch')}-beta.0`));
+    }
+
+    if (currentIsBeta) {
+      validVersions.push(createVersionOption('stable', inc('patch')));
+    }
+
+    validVersions.push({
+      title: 'custom',
+      value: 'custom',
+    });
+
+    return validVersions;
+  };
+
+  let { selectedPackage, version } = await prompts([
     {
       type: 'select',
       name: 'selectedPackage',
@@ -219,10 +270,12 @@ const releasePackages = async userConfig => {
       message: `Choose package:`,
     },
     {
-      type: 'text',
+      type: 'select',
       name: 'version',
+      choices: (_, { selectedPackage }) =>
+        getValidNextVersions(selectedPackage.currentVersion),
       message: (_, { selectedPackage }) =>
-        `Release version(current: ${selectedPackage.currentVersion}): `,
+        `Release version(current: ${selectedPackage.currentVersion})`,
       validate: version => {
         return !!semver.valid(version);
       },
@@ -232,6 +285,23 @@ const releasePackages = async userConfig => {
   if (!selectedPackage) {
     logger.info('No package was selected');
     return;
+  }
+
+  if (version === 'custom') {
+    const { customVersion } = await prompts([
+      {
+        type: 'text',
+        name: 'customVersion',
+        message: `Input the next version (current: ${selectedPackage.currentVersion})`,
+        validate: version => {
+          return !!semver.valid(version);
+        },
+      },
+    ]);
+
+    if (customVersion) {
+      version = customVersion;
+    }
   }
 
   const { path: packagePath, packageJsonPath, name } = selectedPackage;
@@ -276,7 +346,7 @@ const releasePackages = async userConfig => {
 program
   .name('gitkit')
   .description('CLI to git-hook utility collection')
-  .version('1.0.0');
+  .version(version);
 
 program
   .command('setup')
