@@ -24,6 +24,16 @@ const defaultConfig = {
   hooks: {},
 };
 
+const execCallbackWriteStream = ({ stdout, stderr }) => {
+  if (stdout) {
+    process.stdout.write(stdout);
+  }
+
+  if (stderr) {
+    process.stderr.write(stderr);
+  }
+};
+
 const getConfigFromPackageJson = (cwd = execPath) => {
   const packageJsonPath = path.join(cwd, 'package.json');
 
@@ -267,7 +277,7 @@ const releasePackages = async userConfig => {
         title: data.name,
         value: data,
       })),
-      message: `Choose package:`,
+      message: `Choose package (changes detected):`,
     },
     {
       type: 'select',
@@ -308,6 +318,56 @@ const releasePackages = async userConfig => {
 
   if (!version) return;
 
+  const gitTagConfig = config['git-tag'];
+  const tag = `${name}@${version}`;
+
+  const defaultReleaseTagMessage = gitTagConfig['commit-message']?.replace(
+    /{{\s*?tag\s*?}}/,
+    tag
+  );
+
+  const customOptionSymbol = Symbol('custom');
+  let { releaseMessage } = await prompts([
+    {
+      type: 'select',
+      name: 'releaseMessage',
+      message: 'Release Commit Message',
+      choices: [
+        defaultReleaseTagMessage
+          ? {
+              title: `Default: '${defaultReleaseTagMessage}'`,
+              value: defaultReleaseTagMessage,
+            }
+          : undefined,
+        {
+          title: 'Custom',
+          value: customOptionSymbol,
+        },
+      ],
+    },
+  ]);
+
+  if (releaseMessage === customOptionSymbol) {
+    await prompts([
+      {
+        type: 'text',
+        message: 'Input release commit message',
+        validate: message => !!message,
+        onState: message => (releaseMessage = message.value),
+      },
+    ]);
+  }
+
+  const { releaseConfirm } = await prompts([
+    {
+      type: 'confirm',
+      name: 'releaseConfirm',
+      message: `Release preview: \n - Tag: ${tag} \n - Commit Message: '${releaseMessage}'`,
+    },
+  ]);
+
+  if (!releaseConfirm) return;
+
   const packageJson = require(packageJsonPath);
   packageJson.version = version;
 
@@ -323,22 +383,17 @@ const releasePackages = async userConfig => {
     });
   }
 
-  const tag = `${name}@${version}`;
-
-  const gitTagConfig = config['git-tag'];
-
   if (gitTagConfig['auto-add']) {
-    await exec(`git add -A`);
-    const releaseTagMessage = gitTagConfig['commit-message'].replace(
-      /{{\s*?tag\s*?}}/,
-      tag
-    );
+    await exec(`git add -A`).then(execCallbackWriteStream);
+
     await exec(`git commit -m '${releaseTagMessage}'`);
     await exec(`git tag ${tag}`);
 
     if (gitTagConfig['auto-push']) {
-      await exec(`git push origin refs/tags/${tag}`);
-      await exec(`git push`);
+      await exec(`git push origin refs/tags/${tag}`).then(
+        execCallbackWriteStream
+      );
+      await exec(`git push`).then(execCallbackWriteStream);
     }
   }
 };

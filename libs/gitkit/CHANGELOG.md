@@ -1,3 +1,19 @@
+## [1.3.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.2.0...gitkit@1.3.0) (2022-10-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* create logger module
+
+### Features
+
+* support show list options valid next version ([cd186a1](https://github.com/gialynguyen/monostack/commit/cd186a1ceb22e2489fdbc223da28491f59970b4e))
+
+
+### Code Refactoring
+
+* create logger module ([d09675e](https://github.com/gialynguyen/monostack/commit/d09675ea50eb35d8563f11c3f7218e14f941e269))
+
 ## [1.2.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.1.0...gitkit@1.2.0) (2022-10-07)
 
 
