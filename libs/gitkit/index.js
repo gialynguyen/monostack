@@ -1,17 +1,16 @@
 #!/usr/bin/env node
 
-const { Command } = require('commander');
-const deepmerge = require('deepmerge');
-const fs = require('fs');
-const path = require('path');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
-const os = require('os');
-const fg = require('fast-glob');
-const prompts = require('prompts');
-const semver = require('semver');
-const gitRawCommits = require('git-raw-commits');
-const logger = require('./logger');
+import { Command } from 'commander';
+import deepmerge from 'deepmerge';
+import fs from 'fs';
+import path from 'path';
+import util from 'util';
+import os from 'os';
+import fg from 'fast-glob';
+import prompts from 'prompts';
+import semver from 'semver';
+import gitRawCommits from 'git-raw-commits';
+import logger from './logger';
 
 const version = '1.2.0';
 const program = new Command();
@@ -404,9 +403,9 @@ const releasePackages = async userConfig => {
   const npmConfig = config.npm;
 
   if (npmConfig['auto-publish']) {
-    await exec(`npm publish`, { cwd: packageCwd }).then(
-      execCallbackWriteStream
-    );
+    const { execaCommand } = await import('execa');
+
+    await execaCommand(`npm publish`, { cwd: packageCwd });
   }
 };
 
