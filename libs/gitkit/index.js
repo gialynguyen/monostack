@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 
-const { Command } = require('commander');
-const deepmerge = require('deepmerge');
-const fs = require('fs');
-const path = require('path');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
-const os = require('os');
-const fg = require('fast-glob');
-const prompts = require('prompts');
-const semver = require('semver');
-const gitRawCommits = require('git-raw-commits');
-const logger = require('./logger');
+import { Command } from 'commander';
+import deepmerge from 'deepmerge';
+import fs from 'fs';
+import { execa as exec, execaCommand } from 'execa';
+import path from 'path';
+import util from 'util';
+import os from 'os';
+import fg from 'fast-glob';
+import prompts from 'prompts';
+import semver from 'semver';
+import gitRawCommits from 'git-raw-commits';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+import logger from './logger.js';
 
 const version = '1.2.0';
 const program = new Command();
@@ -125,7 +127,7 @@ const setupCommitlintFeature = async () => {
 };
 
 const getLastTag = async packageName => {
-  const tags = await exec(`git tag`).then(r =>
+  const tags = await exec(`git`, ['tag']).then(r =>
     r.stdout.split(os.EOL).filter(Boolean)
   );
 
@@ -169,6 +171,9 @@ const releasePackages = async userConfig => {
       'commit-message': 'chore(release): {{tag}} :tada:',
       'auto-push': true,
     },
+    npm: {
+      'auto-publish': false,
+    },
     changelog: {
       enable: true,
       preset: 'conventionalcommits',
@@ -185,12 +190,12 @@ const releasePackages = async userConfig => {
   const releasePackagesMetadata = [];
 
   await Promise.all(
-    packages.map(async package => {
-      const packageJsonPath = path.join(package, 'package.json');
+    packages.map(async pkg => {
+      const packageJsonPath = path.join(pkg, 'package.json');
       const packageJson = require(packageJsonPath);
 
       if (!packageJson) {
-        throw new Error(`[${package}]: package.json not found`);
+        throw new Error(`[${pkg}]: package.json not found`);
       }
 
       let { name, version: currentVersion } = packageJson;
@@ -199,20 +204,20 @@ const releasePackages = async userConfig => {
       }
 
       if (!name) {
-        throw new Error(`[${package}]: package's name missing`);
+        throw new Error(`[${pkg}]: package's name missing`);
       }
 
       const lastTag = await getLastTag(name);
       let hasCommit = false;
       if (lastTag) {
-        hasCommit = !!(await hasCommitFromTag(package, lastTag));
+        hasCommit = !!(await hasCommitFromTag(pkg, lastTag));
       }
 
       if (!lastTag || hasCommit) {
         releasePackagesMetadata.push({
           name,
           currentVersion,
-          path: package,
+          path: pkg,
           packageJsonPath,
         });
       }
@@ -314,7 +319,7 @@ const releasePackages = async userConfig => {
     }
   }
 
-  const { path: packagePath, packageJsonPath, name } = selectedPackage;
+  const { path: packageCwd, packageJsonPath, name } = selectedPackage;
 
   if (!version) return;
 
@@ -376,25 +381,49 @@ const releasePackages = async userConfig => {
   const changelogConfig = config.changelog;
 
   if (changelogConfig.enable) {
-    const changelogCmd = `conventional-changelog -p ${changelogConfig.preset} -i CHANGELOG.md -s --commit-path . --lerna-package ${name}`;
+    const changelogCmd = [
+      'conventional-changelog',
+      '-p',
+      changelogConfig.preset,
+      '-i',
+      'CHANGELOG.md',
+      '-s',
+      '--commit-path',
+      '.',
+      '--lerna-package',
+      name,
+    ];
 
-    await exec(`npx ${changelogCmd}`, {
-      cwd: packagePath,
+    await exec('npx', changelogCmd, {
+      cwd: packageCwd,
     });
   }
 
-  if (gitTagConfig['auto-add']) {
-    await exec(`git add -A`).then(execCallbackWriteStream);
+  await exec('git', ['add', '-A']).then(execCallbackWriteStream);
 
-    await exec(`git commit -m '${releaseMessage}'`);
-    await exec(`git tag ${tag}`);
+  await exec('git', ['commit', '-m', releaseMessage]);
+
+  if (gitTagConfig['auto-add']) {
+    await exec('git', `tag ${tag}`);
 
     if (gitTagConfig['auto-push']) {
-      await exec(`git push origin refs/tags/${tag}`).then(
+      await exec('git', `push origin refs/tags/${tag}`).then(
         execCallbackWriteStream
       );
-      await exec(`git push`).then(execCallbackWriteStream);
+      await exec('git', 'push').then(execCallbackWriteStream);
     }
+  }
+
+  const npmConfig = config.npm;
+
+  if (npmConfig['auto-publish']) {
+    const npmrc = path.join(packageCwd, '.npmrc');
+    await execaCommand(`npm publish --userconfig ${npmrc} --tag ${tag}`, {
+      cwd: packageCwd,
+      stdout: process.stdout,
+      stdin: process.stdin,
+      stderr: process.stderr,
+    });
   }
 };
 
