@@ -1,3 +1,10 @@
+### [0.0.2](https://github.com/gialynguyen/monostack/compare/react-csr-webapp@0.0.1...react-csr-webapp@0.0.2) (2022-10-13)
+
+
+### Features
+
+* first release ([3934d88](https://github.com/gialynguyen/monostack/commit/3934d882a8e3faf72325c71e49d57ae48e00466c))
+
 ### 0.0.1 (2022-10-13)
 
 
