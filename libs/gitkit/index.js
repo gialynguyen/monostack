@@ -411,7 +411,7 @@ const releasePackages = async userConfig => {
 
   if (npmConfig['auto-publish']) {
     const npmrc = path.join(packageCwd, '.npmrc');
-    let cmd = `npm publish --tag ${tag}`;
+    let cmd = `npm publish`;
 
     if (fs.existsSync(npmrc)) {
       cmd += ` --userconfig ${npmrc}`;
