@@ -1,31 +1,33 @@
-## [1.6.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.5.0...gitkit@1.6.0) (2022-10-13)
+### [1.6.1](https://github.com/gialynguyen/monostack/compare/gitkit@1.6.0...gitkit@1.6.1) (2022-10-13)
 
+### Bug Fixes
+
+- husky exec install command ([58bf016](https://github.com/gialynguyen/monostack/commit/58bf0166c3b1191a595bba008fad8f7c329c9dd0))
+
+## [1.6.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.5.0...gitkit@1.6.0) (2022-10-13)
 
 ### Features
 
-* load npmrc config when npm publish ([e949930](https://github.com/gialynguyen/monostack/commit/e9499300e4cc7c5d4d65a202ae155becd9efda10))
-* version command ([acc1c79](https://github.com/gialynguyen/monostack/commit/acc1c79acffc0f151f3f1535e112dd1fe1b78774))
+- load npmrc config when npm publish ([e949930](https://github.com/gialynguyen/monostack/commit/e9499300e4cc7c5d4d65a202ae155becd9efda10))
+- version command ([acc1c79](https://github.com/gialynguyen/monostack/commit/acc1c79acffc0f151f3f1535e112dd1fe1b78774))
 
 ## [1.5.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.4.2...gitkit@1.5.0) (2022-10-13)
 
-
 ### Bug Fixes
 
-* unnecessary exec callback ([273e76c](https://github.com/gialynguyen/monostack/commit/273e76c1b8f9d618b04074513c5f38598e29117f))
+- unnecessary exec callback ([273e76c](https://github.com/gialynguyen/monostack/commit/273e76c1b8f9d618b04074513c5f38598e29117f))
 
 ### [1.4.2](https://github.com/gialynguyen/monostack/compare/gitkit@1.4.1...gitkit@1.4.2) (2022-10-13)
 
-
 ### Features
 
-* auto npm publish when publishing ([69a7d67](https://github.com/gialynguyen/monostack/commit/69a7d67092dc636388264b60259df36623a9b516))
+- auto npm publish when publishing ([69a7d67](https://github.com/gialynguyen/monostack/commit/69a7d67092dc636388264b60259df36623a9b516))
 
 ### [1.4.1](https://github.com/gialynguyen/monostack/compare/gitkit@1.4.0...gitkit@1.4.1) (2022-10-09)
 
-
 ### Bug Fixes
 
-* add logger to list publish files ([1a70446](https://github.com/gialynguyen/monostack/commit/1a704465a21bd0af05216c902ccc68e7c32b53ab))
+- add logger to list publish files ([1a70446](https://github.com/gialynguyen/monostack/commit/1a704465a21bd0af05216c902ccc68e7c32b53ab))
 
 ## [1.4.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.2.0...gitkit@1.4.0) (2022-10-09)
 
