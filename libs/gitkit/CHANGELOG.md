@@ -1,3 +1,10 @@
+## [1.5.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.4.2...gitkit@1.5.0) (2022-10-13)
+
+
+### Bug Fixes
+
+* unnecessary exec callback ([273e76c](https://github.com/gialynguyen/monostack/commit/273e76c1b8f9d618b04074513c5f38598e29117f))
+
 ### [1.4.2](https://github.com/gialynguyen/monostack/compare/gitkit@1.4.1...gitkit@1.4.2) (2022-10-13)
 
 

@@ -402,7 +402,7 @@ const releasePackages = async userConfig => {
     if (gitTagConfig['auto-push']) {
       await exec('git', ['push', 'origin', `refs/tags/${tag}`]);
 
-      await exec('git', 'push');
+      await exec('git', ['push']);
     }
   }
 
