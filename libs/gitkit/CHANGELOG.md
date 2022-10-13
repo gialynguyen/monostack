@@ -1,3 +1,10 @@
+### [1.4.2](https://github.com/gialynguyen/monostack/compare/gitkit@1.4.1...gitkit@1.4.2) (2022-10-13)
+
+
+### Features
+
+* auto npm publish when publishing ([69a7d67](https://github.com/gialynguyen/monostack/commit/69a7d67092dc636388264b60259df36623a9b516))
+
 ### [1.4.1](https://github.com/gialynguyen/monostack/compare/gitkit@1.4.0...gitkit@1.4.1) (2022-10-09)
 
 

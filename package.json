@@ -30,15 +30,15 @@
           "libs/*"
         ],
         "git-tag": {
-          "auto-add": false,
-          "auto-push": false,
+          "auto-add": true,
+          "auto-push": true,
           "commit-message": "chore(release): {{tag}} :tada:"
         },
         "npm": {
-          "auto-publish": true
+          "auto-publish": false
         },
         "changelog": {
-          "enable": false,
+          "enable": true,
           "preset": "conventionalcommits"
         }
       }
