@@ -1,3 +1,11 @@
+## [1.6.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.5.0...gitkit@1.6.0) (2022-10-13)
+
+
+### Features
+
+* load npmrc config when npm publish ([e949930](https://github.com/gialynguyen/monostack/commit/e9499300e4cc7c5d4d65a202ae155becd9efda10))
+* version command ([acc1c79](https://github.com/gialynguyen/monostack/commit/acc1c79acffc0f151f3f1535e112dd1fe1b78774))
+
 ## [1.5.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.4.2...gitkit@1.5.0) (2022-10-13)
 
 
