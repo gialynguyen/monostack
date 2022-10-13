@@ -35,7 +35,7 @@
           "commit-message": "chore(release): {{tag}} :tada:"
         },
         "npm": {
-          "auto-publish": false
+          "auto-publish": true
         },
         "changelog": {
           "enable": true,

@@ -26,16 +26,6 @@ const defaultConfig = {
   hooks: {},
 };
 
-const execCallbackWriteStream = ({ stdout, stderr }) => {
-  if (stdout) {
-    process.stdout.write(stdout);
-  }
-
-  if (stderr) {
-    process.stderr.write(stderr);
-  }
-};
-
 const getConfigFromPackageJson = (cwd = execPath) => {
   const packageJsonPath = path.join(cwd, 'package.json');
 
@@ -399,7 +389,7 @@ const releasePackages = async userConfig => {
     });
   }
 
-  await execaCommand('git add -A').then(execCallbackWriteStream);
+  await execaCommand('git add -A');
 
   await exec('git', ['commit', '-m', `${releaseMessage}`], {
     stderr: process.stderr,
@@ -410,11 +400,9 @@ const releasePackages = async userConfig => {
     await exec('git', ['tag', tag]);
 
     if (gitTagConfig['auto-push']) {
-      await exec('git', ['push', 'origin', `refs/tags/${tag}`]).then(
-        execCallbackWriteStream
-      );
+      await exec('git', ['push', 'origin', `refs/tags/${tag}`]);
 
-      await exec('git', 'push').then(execCallbackWriteStream);
+      await exec('git', 'push');
     }
   }
 
