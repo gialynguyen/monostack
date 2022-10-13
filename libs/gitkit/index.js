@@ -10,12 +10,13 @@ import os from 'os';
 import fg from 'fast-glob';
 import prompts from 'prompts';
 import semver from 'semver';
+import { fileURLToPath } from 'url';
 import gitRawCommits from 'git-raw-commits';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 import logger from './logger.js';
 
-const version = '1.4.2';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const program = new Command();
 const execPath = process.cwd();
 const readFile = util.promisify(fs.readFile);
@@ -419,10 +420,12 @@ const releasePackages = async userConfig => {
   }
 };
 
-program
-  .name('gitkit')
-  .description('CLI to git-hook utility collection')
-  .version(version);
+program.name('gitkit').description('CLI to git-hook utility collection');
+
+program.command('version').action(async () => {
+  const version = require(path.join(__dirname, 'package.json')).version;
+  logger.info(version);
+});
 
 program
   .command('setup')
