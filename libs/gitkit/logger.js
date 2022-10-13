@@ -1,4 +1,4 @@
-const kolorist = require('kolorist');
+import * as kolorist from 'kolorist';
 
 const info = (...params) => {
   console.log(kolorist.cyan(...params));
@@ -28,4 +28,4 @@ const logger = {
   heading,
 };
 
-module.exports = logger;
+export default logger;
