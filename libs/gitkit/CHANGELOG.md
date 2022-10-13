@@ -1,3 +1,9 @@
+### [1.6.2](https://github.com/gialynguyen/monostack/compare/gitkit@1.6.1...gitkit@1.6.2) (2022-10-13)
+
+### Bug Fixes
+
+- not publish latest version ([db3ce4c](https://github.com/gialynguyen/monostack/commit/db3ce4c586a945832cb73b4e236cd6bf265cd88f))
+
 ### [1.6.1](https://github.com/gialynguyen/monostack/compare/gitkit@1.6.0...gitkit@1.6.1) (2022-10-13)
 
 ### Bug Fixes
