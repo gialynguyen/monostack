@@ -410,8 +410,14 @@ const releasePackages = async userConfig => {
   const npmConfig = config.npm;
 
   if (npmConfig['auto-publish']) {
-    // const npmrc = path.join(packageCwd, '.npmrc');
-    await execaCommand(`npm publish --tag ${tag}`, {
+    const npmrc = path.join(packageCwd, '.npmrc');
+    let cmd = `npm publish --tag ${tag}`;
+
+    if (fs.existsSync(npmrc)) {
+      cmd += ` --userconfig ${npmrc}`;
+    }
+
+    await execaCommand(cmd, {
       cwd: packageCwd,
       stdout: process.stdout,
       stdin: process.stdin,
