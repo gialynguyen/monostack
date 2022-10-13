@@ -3,7 +3,7 @@
 import { Command } from 'commander';
 import deepmerge from 'deepmerge';
 import fs from 'fs';
-import { execa as exec } from 'execa';
+import { execa as exec, execaCommand } from 'execa';
 import path from 'path';
 import util from 'util';
 import os from 'os';
@@ -417,14 +417,13 @@ const releasePackages = async userConfig => {
   const npmConfig = config.npm;
 
   if (npmConfig['auto-publish']) {
-    const result = exec('npm', ['publish'], {
+    const npmrc = path.join(packageCwd, '.npmrc');
+    await execaCommand(`npm publish --userconfig ${npmrc} --tag ${tag}`, {
       cwd: packageCwd,
-      preferLocal: true,
+      stdout: process.stdout,
+      stdin: process.stdin,
+      stderr: process.stderr,
     });
-    result.stdout.pipe(process.stdout, { end: false });
-    result.stderr.pipe(process.stderr, { end: true });
-
-    await result;
   }
 };
 
