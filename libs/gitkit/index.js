@@ -15,7 +15,7 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 import logger from './logger.js';
 
-const version = '1.2.0';
+const version = '1.4.2';
 const program = new Command();
 const execPath = process.cwd();
 const readFile = util.promisify(fs.readFile);
@@ -24,16 +24,6 @@ const exists = util.promisify(fs.exists);
 const defaultConfig = {
   features: {},
   hooks: {},
-};
-
-const execCallbackWriteStream = ({ stdout, stderr }) => {
-  if (stdout) {
-    process.stdout.write(stdout);
-  }
-
-  if (stderr) {
-    process.stderr.write(stderr);
-  }
 };
 
 const getConfigFromPackageJson = (cwd = execPath) => {
@@ -399,26 +389,28 @@ const releasePackages = async userConfig => {
     });
   }
 
-  await exec('git', ['add', '-A']).then(execCallbackWriteStream);
+  await execaCommand('git add -A');
 
-  await exec('git', ['commit', '-m', releaseMessage]);
+  await exec('git', ['commit', '-m', `${releaseMessage}`], {
+    stderr: process.stderr,
+    stdout: process.stdout,
+  });
 
   if (gitTagConfig['auto-add']) {
-    await exec('git', `tag ${tag}`);
+    await exec('git', ['tag', tag]);
 
     if (gitTagConfig['auto-push']) {
-      await exec('git', `push origin refs/tags/${tag}`).then(
-        execCallbackWriteStream
-      );
-      await exec('git', 'push').then(execCallbackWriteStream);
+      await exec('git', ['push', 'origin', `refs/tags/${tag}`]);
+
+      await exec('git', ['push']);
     }
   }
 
   const npmConfig = config.npm;
 
   if (npmConfig['auto-publish']) {
-    const npmrc = path.join(packageCwd, '.npmrc');
-    await execaCommand(`npm publish --userconfig ${npmrc} --tag ${tag}`, {
+    // const npmrc = path.join(packageCwd, '.npmrc');
+    await execaCommand(`npm publish --tag ${tag}`, {
       cwd: packageCwd,
       stdout: process.stdout,
       stdin: process.stdin,

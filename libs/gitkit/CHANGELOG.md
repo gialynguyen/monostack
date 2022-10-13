@@ -1,3 +1,17 @@
+## [1.5.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.4.2...gitkit@1.5.0) (2022-10-13)
+
+
+### Bug Fixes
+
+* unnecessary exec callback ([273e76c](https://github.com/gialynguyen/monostack/commit/273e76c1b8f9d618b04074513c5f38598e29117f))
+
+### [1.4.2](https://github.com/gialynguyen/monostack/compare/gitkit@1.4.1...gitkit@1.4.2) (2022-10-13)
+
+
+### Features
+
+* auto npm publish when publishing ([69a7d67](https://github.com/gialynguyen/monostack/commit/69a7d67092dc636388264b60259df36623a9b516))
+
 ### [1.4.1](https://github.com/gialynguyen/monostack/compare/gitkit@1.4.0...gitkit@1.4.1) (2022-10-09)
 
 
