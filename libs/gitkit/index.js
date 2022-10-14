@@ -41,7 +41,7 @@ const getConfigFromPackageJson = (cwd = execPath) => {
 
 const addHuskyHook = async (filePath, cmd) => {
   if (!(await exists(filePath))) {
-    await execaCommand(`npx husky set ${filePath} '${cmd}'`);
+    await exec('npx', ['husky', 'set', filePath, cmd]);
     return;
   }
   const hookFile = await readFile(filePath);
@@ -437,7 +437,7 @@ program
   .command('setup')
   .description('Setup git-hook core features')
   .action(async () => {
-    await execaCommand('npx husky install');
+    await execaCommand('npx husky install', { stdio: 'inherit' });
 
     const userConfig = getConfigFromPackageJson();
     if (!userConfig) {
