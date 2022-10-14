@@ -1,3 +1,9 @@
+### [1.6.3](https://github.com/gialynguyen/monostack/compare/gitkit@1.6.2...gitkit@1.6.3) (2022-10-14)
+
+### Bug Fixes
+
+- husky exec set command ([9c5d01f](https://github.com/gialynguyen/monostack/commit/9c5d01f51625c4e0137da5a7c2cfe6e9952aaa0b))
+
 ### [1.6.2](https://github.com/gialynguyen/monostack/compare/gitkit@1.6.1...gitkit@1.6.2) (2022-10-13)
 
 ### Bug Fixes
