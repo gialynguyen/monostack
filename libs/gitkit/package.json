@@ -9,11 +9,18 @@
   },
   "exports": {
     ".": "./index.js",
-    "./commitlint.config": "./commitlint.config.js"
+    "./commitlint.config": "./commitlint.config.js",
+    "./logger": "./logger.js",
+    "./commitlint": "./commitlint.js",
+    "./githook": "./githook.js",
+    "./release": "./release.js"
   },
   "files": [
     "./index.js",
     "./logger.js",
+    "./commitlint.js",
+    "./githook.js",
+    "./release.js",
     "./commitlint.config.js"
   ],
   "scripts": {
