@@ -1,3 +1,5 @@
+## [1.7.1](https://github.com/gialynguyen/monostack/compare/gitkit@1.7.0...gitkit@1.7.1) (2022-11-06)
+
 ## [1.7.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.6.1...gitkit@1.7.0) (2022-11-06)
 
 ### ⚠ BREAKING CHANGES
