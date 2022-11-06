@@ -1,6 +1,6 @@
 {
   "name": "@monostack/gitkit",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "description": "",
   "main": "./index.js",
   "type": "module",
@@ -9,11 +9,18 @@
   },
   "exports": {
     ".": "./index.js",
-    "./commitlint.config": "./commitlint.config.js"
+    "./commitlint.config": "./commitlint.config.js",
+    "./logger": "./logger.js",
+    "./commitlint": "./commitlint.js",
+    "./githook": "./githook.js",
+    "./release": "./release.js"
   },
   "files": [
     "./index.js",
     "./logger.js",
+    "./commitlint.js",
+    "./githook.js",
+    "./release.js",
     "./commitlint.config.js"
   ],
   "scripts": {
@@ -24,7 +31,7 @@
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "commander": "^9.4.0",
-    "conventional-changelog": "^3.1.25",
+    "conventional-changelog-cli": "^2.2.2",
     "deepmerge": "^4.2.2",
     "execa": "^6.1.0",
     "fast-glob": "^3.2.12",
