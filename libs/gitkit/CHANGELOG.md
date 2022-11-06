@@ -1,3 +1,13 @@
+## [1.7.0](https://github.com/gialynguyen/monostack/compare/gitkit@1.6.1...gitkit@1.7.0) (2022-11-06)
+
+### ⚠ BREAKING CHANGES
+
+- husky install flow (#5)
+
+### Code Refactoring
+
+- husky install flow ([#5](https://github.com/gialynguyen/monostack/issues/5)) ([0f259b0](https://github.com/gialynguyen/monostack/commit/0f259b0692a3c1570e712021dadbf652ff1444b4))
+
 ### [1.6.3](https://github.com/gialynguyen/monostack/compare/gitkit@1.6.2...gitkit@1.6.3) (2022-10-14)
 
 ### Bug Fixes
