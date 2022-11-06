@@ -57,7 +57,7 @@ program
     await setupGitHooksFeature(config.hooks);
 
     if (config.features.commitlint) {
-      await setupCommitlintFeature();
+      await setupCommitlintFeature(execPath);
       await setupGitHooksFeature({
         'commit-msg': 'npx --no -- commitlint --edit ${1}',
       });

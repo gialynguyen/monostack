@@ -4,6 +4,7 @@ import fs from 'fs';
 import logger from './logger.js';
 import semver from 'semver';
 import os from 'os';
+import path from 'path';
 import deepmerge from 'deepmerge';
 import { execa as exec, execaCommand } from 'execa';
 import { createRequire } from 'module';
@@ -24,13 +25,13 @@ const getLastTag = async packageName => {
     .reverse()[0];
 };
 
-const hasCommitFromTag = (path, tag) => {
+const hasCommitFromTag = (pkgPath, tag) => {
   return new Promise(resolve => {
     try {
       let hasCommit = false;
       const stream = gitRawCommits({
         from: tag,
-        path,
+        path: pkgPath,
       })
         .on('data', data => {
           const commit = data.toString().split(os.EOL).filter(Boolean)?.[0];

@@ -1,11 +1,11 @@
 import fs from 'fs';
 import logger from './logger.js';
+import path from 'path';
 import { createRequire } from 'module';
-import logger from './logger.js';
 
 const require = createRequire(import.meta.url);
 
-const setupCommitlintFeature = async () => {
+const setupCommitlintFeature = async execPath => {
   const defaultPlugins = ['@commitlint/config-conventional'];
   const commitlintConfigFile = [
     '.commitlintrc',
