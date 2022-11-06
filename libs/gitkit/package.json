@@ -1,6 +1,6 @@
 {
   "name": "@monostack/gitkit",
-  "version": "1.6.3",
+  "version": "1.7.1",
   "description": "",
   "main": "./index.js",
   "type": "module",
@@ -24,6 +24,7 @@
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "commander": "^9.4.0",
+    "conventional-changelog": "^3.1.25",
     "deepmerge": "^4.2.2",
     "execa": "^6.1.0",
     "fast-glob": "^3.2.12",
