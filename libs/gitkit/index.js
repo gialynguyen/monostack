@@ -19,8 +19,10 @@ import logger from './logger.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const program = new Command();
 const execPath = process.cwd();
-const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
 const exists = util.promisify(fs.exists);
+const mkdir = util.promisify(fs.mkdir);
+const huskyDir = `.husky/gitkit/`;
 
 const defaultConfig = {
   features: {},
@@ -39,38 +41,30 @@ const getConfigFromPackageJson = (cwd = execPath) => {
   return gitKitConfig;
 };
 
-const addHuskyHook = async (filePath, cmd) => {
+const addHuskyHook = async (hook, filePath, cmd) => {
+  const shScrip = `. "$(dirname -- "$0")/gitkit/${hook}.sh"`;
+
   if (!(await exists(filePath))) {
-    await exec('npx', ['husky', 'set', filePath, cmd]);
-    return;
-  }
-  const hookFile = await readFile(filePath);
-  const hookCmds = hookFile.toString().split(os.EOL);
-  const cmdTrim = cmd.trim();
-
-  const cmdExisted = hookCmds.some(hookCmd => {
-    if (hookCmd.trim() === cmdTrim) {
-      return true;
-    }
-
-    return false;
-  });
-
-  if (cmdExisted) {
-    return;
+    await exec('npx', ['husky', 'set', filePath, shScrip]);
   }
 
-  await exec('npx', ['husky', 'add', filePath, cmd]);
+  const shFilePath = path.join(execPath, huskyDir, `${hook}.sh`);
+
+  await writeFile(shFilePath, cmd, { mode: 0o777, flag: 'wx' });
 };
 
 const setupGitHooksFeatures = async (hooksConfig = {}) => {
   const processes = [];
+  if (!(await exists(huskyDir))) {
+    await mkdir(huskyDir, { recursive: true });
+  }
+
   for (const hook in hooksConfig) {
     if (hooksConfig.hasOwnProperty(hook)) {
       const cmd = hooksConfig[hook];
       const filePath = `.husky/${hook}`;
 
-      processes.push(addHuskyHook(filePath, cmd));
+      processes.push(addHuskyHook(hook, filePath, cmd));
     }
   }
 
