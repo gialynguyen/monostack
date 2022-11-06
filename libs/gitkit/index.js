@@ -50,7 +50,7 @@ const addHuskyHook = async (hook, filePath, cmd) => {
 
   const shFilePath = path.join(execPath, huskyDir, `${hook}.sh`);
 
-  await writeFile(shFilePath, cmd, { mode: 0o777, flag: 'wx' });
+  await writeFile(shFilePath, cmd, { mode: 0o777, flag: 'w' });
 };
 
 const setupGitHooksFeatures = async (hooksConfig = {}) => {
